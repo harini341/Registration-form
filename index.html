@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            padding: 30px;
+        }
+
+        form {
+            width: 300px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 8px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Registration Form</h2>
+
+    <form id="registerForm">
+
+        <label>Name:</label>
+        <input type="text" placeholder="Enter your name" id="name">
+        <div id="nameError" class="error"></div>
+
+        <label>Email:</label>
+        <input type="text" placeholder="Enter you mail-id" id="email">
+        <div id="emailError" class="error"></div>
+
+        <label>Password:</label>
+        <input type="password" placeholder="Enter your password" id="password">
+        <div id="passwordError" class="error"></div>
+
+        <button type="submit" id="submitBtn" disabled>Submit</button>
+
+    </form>
+
+    <script>
+
+        const nameInput = document.getElementById("name");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const submitBtn = document.getElementById("submitBtn");
+
+        const nameError = document.getElementById("nameError");
+        const emailError = document.getElementById("emailError");
+        const passwordError = document.getElementById("passwordError");
+
+        function validateForm() {
+
+            let valid = true;
+
+            // Name validation
+            if (nameInput.value.trim() === "") {
+                nameError.textContent = "";   // CHANGED (removed error message when empty)
+                valid = false;                // CHANGED
+            } else {
+                nameError.textContent = "";
+            }
+
+            // Email validation
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+
+            if (emailInput.value.trim() === "") {   // CHANGED (check empty first)
+                emailError.textContent = "";      // CHANGED (no message if empty)
+                valid = false;                    // CHANGED
+            }
+            else if (!emailInput.value.match(emailPattern)) {
+                emailError.textContent = "Enter a valid email address";
+                valid = false;
+            }
+            else {
+                emailError.textContent = "";
+            }
+
+            // Password validation
+            if (passwordInput.value === "") {      // CHANGED (check empty first)
+                passwordError.textContent = "";  // CHANGED (no message if empty)
+                valid = false;                   // CHANGED
+            }
+            else if (passwordInput.value.length < 6) {
+                passwordError.textContent = "Password must be at least 6 characters";
+                valid = false;
+            }
+            else {
+                passwordError.textContent = "";
+            }
+
+            submitBtn.disabled = !valid;
+        }
+
+        nameInput.addEventListener("input", validateForm);
+        emailInput.addEventListener("input", validateForm);
+        passwordInput.addEventListener("input", validateForm);
+
+    </script>
+
+</body>
+
+</html>
